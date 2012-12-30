@@ -24,6 +24,7 @@ Gem::Specification.new do |s|
     "README.md",
     "Rakefile",
     "VERSION",
+    "bors.gemspec",
     "lib/bors.rb",
     "lib/bors/example.rb",
     "lib/bors/example/feature.rb",
