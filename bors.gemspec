@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Sam Richardson"]
-  s.date = "2012-12-30"
+  s.date = "2013-01-13"
   s.description = "Wrapper for the Vowpal Wabbit library"
   s.email = "sam@richardson.co.nz"
   s.extra_rdoc_files = [
