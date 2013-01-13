@@ -1,5 +1,6 @@
 require_relative 'bors/example'
 require_relative 'bors/model'
+require_relative 'bors/prediction'
 require 'open3'
 require 'tempfile'
 
@@ -14,8 +15,10 @@ class Bors
 	end
 
 	def add_example(details)
-		@examples.write("#{Example.new(details).to_s}\n")
-		@example_count += 1
+		begin
+			@examples.write("#{Example.new(details).to_s}\n")
+			@example_count += 1
+		end
 	end
 
 	# returns an example from the file
@@ -37,7 +40,7 @@ class Bors
 	# creates a training model from the loaded examples
 	def model(path)
 		raise Exceptions::MissingExamples.new unless @examples.length > 0
-		err, out, status = Open3.capture3("vw #{@examples.path} -c --passes 5 -f #{path}.model")
+		err, out, status = Open3.capture3("vw #{@examples.path} -c --passes 30 -b 25 --invariant -l 10 --loss_function logistic --exact_adaptive_norm -f #{path}.model")
 		Model.new(err, out, status)
 	end
 

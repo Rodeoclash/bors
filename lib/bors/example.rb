@@ -38,7 +38,9 @@ class Bors
 
 		def namespaces
 			raise Exceptions::ArgumentError.new('You must provide at least one namespace') unless @options[:namespaces] && @options[:namespaces].length > 0
+
 			@options[:namespaces].map do |name, options|
+				raise Exceptions::ArgumentError.new('Incorrect format for options, must be a Hash') unless options.kind_of? Hash
 				
 				returning = ""
 				returning += "|#{name}"
