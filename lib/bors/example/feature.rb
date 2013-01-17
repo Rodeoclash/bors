@@ -1,10 +1,10 @@
 require_relative "../exceptions"
-require_relative "../maths"
+require_relative "../math"
 
 class Bors
 	class Example
 		class Feature
-			include Maths
+			include Math
 
 			def initialize(value)
 				@value = value

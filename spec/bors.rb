@@ -5,6 +5,7 @@ module Indus
 	describe Bors do
 
 		before :each do
+			@bors = Bors.new
 		end
 
 		it "should be able to create a Bors object" do
@@ -12,16 +13,12 @@ module Indus
 		end
 
 		it "should be able to add an example to the Bors object with full options" do
-			bors = Bors.new
-			bors.add_example({
+			@bors.add_example({
 				:label => 0,
 				:initial_prediction => 0.5,
 				:importance => 1,
 				:tag => "second_house",
-
-				# required to have at least 1
 				:namespaces => {
-
 					"Animal" => {
 						:value => 1,
 						:features => [
@@ -40,23 +37,34 @@ module Indus
 							"Other small animals"
 						]
 					}
-
 				}
 			})
 		end
 
 		it "should be possible to omit items that are not required" do
-			bors = Bors.new
-			bors.add_example({
-
-				# real number we're trying to predict
+			@bors.add_example({
 				:label => 1,
-
-				# required to have at least 1
 				:namespaces => {
 					"text" => { :features => "Some basic string" }
 				}
 			})
+		end
+
+		it "should be possible to save the examples loaded to a file" do
+			path = "#{File.dirname(__FILE__)}/temp/examples.txt"
+			@bors.add_example({:label => 1, :namespaces => { "text" => { :features => "Some basic string"} } })
+			@bors.save(path)
+			File.exist?(path).should == true
+		end
+
+		it "should append new examples to the saved file instead of the temp file" do
+			path = "#{File.dirname(__FILE__)}/temp/examples.txt"
+			@bors.add_example({:label => 1, :namespaces => { "text" => { :features => "Some basic string"} } })
+			@bors.save(path)
+			@bors.add_example({:label => -1, :namespaces => { "text" => { :features => "Another basic string"} } })
+			@bors.get_example(2).should == "-1 |text Another basic string\n"
+			@bors.add_example({:label => -1, :namespaces => { "text" => { :features => "Last basic string"} } })
+			@bors.get_example(3).should == "-1 |text Last basic string\n"
 		end
 
 	end

@@ -1,10 +1,10 @@
 require_relative "exceptions"
-require_relative "maths"
+require_relative "math"
 require_relative "example/feature"
 
 class Bors
 	class Example
-		include Maths
+		include Math
 
 		def initialize(options)
 			@options = options
@@ -15,7 +15,7 @@ class Bors
 		end
 
 		def label
-			return_options_key_if_valid_real_number :label
+			return_options_key_if_valid_number :label
 		end
 
 		def importance
@@ -64,6 +64,15 @@ class Bors
 		def return_options_key_if_valid_real_number(key)
 			if @options[key]
 				raise Exceptions::NotRealNumber.new unless is_real_number?(@options[key])
+				@options[key]
+			else
+				""
+			end
+		end
+
+		def return_options_key_if_valid_number(key)
+			if @options[key]
+				raise Exceptions::NotRealNumber.new unless is_number?(@options[key])
 				@options[key]
 			else
 				""

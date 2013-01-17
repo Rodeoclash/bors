@@ -12,6 +12,10 @@ module Indus
 			Bors::Example.new({ :label => 1 }).label.should == 1
 		end
 
+		it "should allow you to define a negative label for the object" do
+			Bors::Example.new({ :label => -1 }).label.should == -1
+		end
+
 		it "should raise an error when trying to define an invalid label" do
 			expect { Bors::Example.new({ :label => "invalid" }).label }.to raise_error Bors::Exceptions::NotRealNumber
 		end
