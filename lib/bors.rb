@@ -25,7 +25,7 @@ class Bors
 
 	# load examples from path, should automatically detect a cache file and use that instead
 	def load(path)
-
+		true
 	end
 
 	# outputs examples to the specified file
@@ -33,13 +33,14 @@ class Bors
 		raise Exceptions::MissingExamples.new unless @examples_file.length > 0
 		FileUtils.cp(@examples_file.path, path)
 		@examples_file = File.open(path, 'a')
+		true
 	end
 
 	# creates a training model from the loaded examples
 	def model(path)
 		raise Exceptions::MissingExamples.new unless @examples_file.length > 0
-		err, out, status = Open3.capture3("vw #{@examples_file.path} -c --passes 30 -b 25 --invariant -l 10 --loss_function logistic --exact_adaptive_norm -f #{path}")
-		Model.new(err, out, status)
+		out, err, status = Open3.capture3("vw #{@examples_file.path} -c --passes 30 -b 25 --invariant -l 10 --loss_function logistic --exact_adaptive_norm -f #{path}")
+		Model.new(out)
 	end
 
 	# predict using a model and the loaded exampels

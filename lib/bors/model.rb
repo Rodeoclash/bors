@@ -1,22 +1,24 @@
+require_relative "model/settings"
+
 class Bors
 	class Model
 		
-		def initialize(err, out, status)
-			@err = err
-			@out = out
-			@status = status
-			puts @out
+		def initialize(data)
+			@data = data
 		end
 
 		def settings
 			return @settings unless @settings.nil?
-			@settings = Hash.new
-			@out.each_line do |line|
+			@settings = Settings.new
+			
+			@data.each_line do |line|
 				return @settings if line.match('loss')
+
 				line.match(/\s=\s/) do |m|
 					label, value = split_line(line)
 					@settings[format_label(label)] = format_value(value)
 				end
+
 			end
 		end
 
@@ -24,7 +26,7 @@ class Bors
 			return @sample unless @sample.nil?
 			@sample = Array.new
 			found = false
-			@out.each_line do |line|
+			@data.each_line do |line|
 				if line.match(/^\n/)
 					return @sample
 				end
@@ -50,7 +52,7 @@ class Bors
 		def results
 			return @settings unless @settings.nil?
 			@settings = Hash.new
-			@out.each_line do |line|
+			@data.each_line do |line|
 				if line.match('finished run')
 					found = true
 					next
