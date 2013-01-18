@@ -3,7 +3,7 @@ require_relative "../../spec_helper"
 describe Bors::Result::Settings do
 
 	before :each do
-		@data = File.open("#{File.dirname(__FILE__)}/../../fixtures/settings.txt", 'r').read
+		@data = File.open("#{File.dirname(__FILE__)}/../../fixtures/result.txt", 'r').read
 	end
 
 	it "should be able to create a settings object" do

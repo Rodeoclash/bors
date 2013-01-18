@@ -1,4 +1,5 @@
 require_relative "result/settings"
+require_relative "result/samples"
 
 class Bors
 	class Result
@@ -8,39 +9,11 @@ class Bors
 		end
 
 		def settings		
-			lines = String.new
-			@data.each_line do |line|
-				break if line.match('average')
-				lines += line
-			end
-			Settings.new(lines)
+			@settings ||= Settings.new(@data)
 		end
 
-		def sample
-			return @sample unless @sample.nil?
-			@sample = Array.new
-			found = false
-			@data.each_line do |line|
-				if line.match(/^\n/)
-					return @sample
-				end
-				if line.match('loss')
-					found = true
-					next
-				end
-				if found == true
-					average_loss, since_last, example_counter, example_weight, current_label, current_predict, current_features = line.scan(/\d+\.?\d*/)
-					@sample.push({
-						:average_loss => average_loss,
-						:since_last => since_last,
-						:example_counter => example_counter,
-						:example_weight => example_weight,
-						:current_label => current_label,
-						:current_predict => current_predict,
-						:current_features => current_features
-					})
-				end
-			end
+		def samples
+			@samples ||= Samples.new(@data)
 		end
 
 		def results

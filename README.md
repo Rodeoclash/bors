@@ -40,17 +40,14 @@ Bors will return a result object which can be inspected for more information:
 
 	puts result.settings.to_h
 
-Will return information about the settings used for the run:
+Which will return information about the settings used for the run:
 
 	{:num_weight_bits=>18, :learning_rate=>0, :initial_t=>0.0, :power_t=>0.5, :num_sources=>1}
 
-You can also access a sample of the run:
+You can also access a sample of the run and the results:
 
 	puts result.sample.to_h
-
-And the results of the run:
-
-	puts result.results.to_h
+	puts result.results.to_h	
 
 At this point, you might want to save your examples into a file so you can use them again later:
 
@@ -72,7 +69,7 @@ or loaded:
 
 	@bors.load_cache("~/examples.cache")
 
-Some run options on VW (like "passes") will also create a cache file before running. Once Bors is using a cache, it is impossible to add further examples. It's suggested that you save your examples out to a file before creating a cache mode.
+Some run options on VW (like "passes") will also create a cache file before running. Once Bors is using a cache, it is impossible to add further examples. It's suggested that you save your examples out to a file before entering the cache mode.
 
 ## Contributing to Bors
  

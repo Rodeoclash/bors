@@ -6,15 +6,23 @@ class Bors
 		class Settings < Hash
 			include Hashie::Extensions::MethodAccess
 
+			SPLIT_SETTINGS_LINE = /\s=\s/
+
 			def initialize(data)
-				split_regex = /\s=\s/
-				@data = data
-				@data.each_line do |line|
-					line.match(split_regex) do |m|
-						label, value = line.split(split_regex)
+				lines = String.new
+
+				data.each_line do |line|
+					break if line.match('average')
+					lines += line
+				end
+
+				lines.each_line do |line|
+					line.match(SPLIT_SETTINGS_LINE) do |m|
+						label, value = line.split(SPLIT_SETTINGS_LINE)
 						self.send("#{label}=".gsub(' ', '_').downcase, value.gsub("\n", ""))
 					end
-				end				
+				end
+
 			end
 
 			def to_h

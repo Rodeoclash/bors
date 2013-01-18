@@ -1,9 +1,0 @@
-final_regressor = /bors_models/location-adelaide.model.model
-Num weight bits = 25
-learning rate = 10
-initial_t = 0
-power_t = 0.5
-decay_learning_rate = 1
-creating cache_file = /var/folders/ny/vd6j4wq12pz4y96n8v3487cc0000gn/T/bors20130117-24035-xuv6sw.cache
-Reading from /var/folders/ny/vd6j4wq12pz4y96n8v3487cc0000gn/T/bors20130117-24035-xuv6sw
-num sources = 1
