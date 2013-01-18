@@ -3,7 +3,7 @@ require 'oj'
 
 class Bors
 	class Result
-		class Samples < Hash
+		class Samples
 			include Enumerable
 
 			def initialize(data)

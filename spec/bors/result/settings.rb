@@ -6,11 +6,11 @@ describe Bors::Result::Settings do
 		@data = File.open("#{File.dirname(__FILE__)}/../../fixtures/result.txt", 'r').read
 	end
 
-	it "should be able to create a settings object" do
+	it "should be able to create the object" do
 		expect { Bors::Result::Settings.new(@data) }.to_not raise_error
 	end
 
-	it "should be able to return the settings object as a hash with the correct values" do
+	it "should be able to return the object as a hash with the correct values" do
 		hash = Bors::Result::Settings.new(@data).to_h
 		hash.kind_of?(Hash).should be == true
 		hash[:final_regressor].should be == "/bors_models/location-adelaide.model.model"
@@ -24,7 +24,7 @@ describe Bors::Result::Settings do
 		hash[:num_sources].should be == 1
 	end
 
-	it "should be able to serialise the settings to json" do
+	it "should be able to serialise the object to json" do
 		Bors::Result::Settings.new(@data).to_json.kind_of?(String).should be == true
 	end
 
