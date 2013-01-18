@@ -1,3 +1,5 @@
 require_relative 'bors/example/feature'
 require_relative 'bors/example'
+require_relative 'bors/result/settings'
+require_relative 'bors/result'
 require_relative 'bors'

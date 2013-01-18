@@ -1,7 +1,7 @@
-require_relative "model/settings"
+require_relative "result/settings"
 
 class Bors
-	class Model
+	class Result
 		
 		def initialize(data)
 			@data = data

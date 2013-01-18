@@ -2,7 +2,7 @@ require 'hashie'
 require 'oj'
 
 class Bors
-	class Model
+	class Result
 		class Settings < Hash
 			include Hashie::Extensions::MethodAccess
 

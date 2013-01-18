@@ -64,7 +64,7 @@ module Indus
 						]
 					}
 				}
-			}).namespaces.should == "|Diet:2 Other small animals |Description:16 Legs:4 Horns:2"
+			}).features.should == "|Diet:2 Other small animals |Description:16 Legs:4 Horns:2"
 		end
 
 	end

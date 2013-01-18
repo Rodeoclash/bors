@@ -9,5 +9,7 @@ class Bors
 
 		class MissingExamples < BorsError; end
 
+		class CachedExamplesEnabled < BorsError; end
+
 	end
 end
