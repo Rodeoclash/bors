@@ -7,19 +7,13 @@ class Bors
 			@data = data
 		end
 
-		def settings
-			return @settings unless @settings.nil?
-			@settings = Settings.new
-			
+		def settings		
+			lines = String.new
 			@data.each_line do |line|
-				return @settings if line.match('loss')
-
-				line.match(/\s=\s/) do |m|
-					label, value = split_line(line)
-					@settings[format_label(label)] = format_value(value)
-				end
-
+				break if line.match('average')
+				lines += line
 			end
+			Settings.new(lines)
 		end
 
 		def sample

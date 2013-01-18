@@ -11,7 +11,7 @@ class Bors
 		end
 
 		def to_s
-			"#{label} #{importance} #{initial_prediction} #{tag}#{namespaces}".squeeze(' ')
+			"#{label} #{importance} #{initial_prediction} #{tag}#{features}".squeeze(' ')
 		end
 
 		def label
@@ -36,27 +36,20 @@ class Bors
 			end
 		end
 
-		def namespaces
-			raise Exceptions::ArgumentError.new('You must provide at least one namespace') unless @options[:namespaces] && @options[:namespaces].length > 0
-
-			@options[:namespaces].map do |name, options|
-				raise Exceptions::ArgumentError.new('Incorrect format for options, must be a Hash') unless options.kind_of? Hash
-				
-				returning = ""
-				returning += "|#{name}"
-				returning += ":#{options[:value]}" if options[:value]
-
-				if options[:features].kind_of? Array
-					options[:features].each do |feature|
-						returning += " #{Feature.new(feature).to_s}"
-					end
-				else
-					returning += " #{Feature.new(options[:features]).to_s}"
-				end
-
+		def features
+			if @options[:namespaces] && @options[:namespaces].length > 0
+				@options[:namespaces].map do |name, options|
+					raise Exceptions::ArgumentError.new('Incorrect format for namescape, must be defined as a Hash') unless options.kind_of? Hash
+					returning = "|#{name}"
+					returning += ":#{options[:value]}" if options[:value]
+					returning += create_features_from_array(options[:features])
+					returning += " "
+				end.join.strip
+			else
+				returning = "|"
+				returning += create_features_from_array(@options[:features])
 				returning += " "
-
-			end.join.strip
+			end
 		end
 
 		private
@@ -77,6 +70,10 @@ class Bors
 			else
 				""
 			end
+		end
+
+		def create_features_from_array(features)
+			features.map { |feature| " #{Feature.new(feature).to_s}" }.join
 		end
 		
 	end

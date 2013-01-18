@@ -13,10 +13,8 @@ module Indus
 		end
 
 		it "should return the settings of the model run" do
-			#settings = Bors::Model.new(@data).settings
-			#settings.kind_of?(Hash).should be == true
-			#settings[:final_regressor].should eq "/bors_models/location-adelaide.model.model"
-			#settings[:num_weight_bits].should eq "25"
+			settings = Bors::Model.new(@data).settings
+			settings.kind_of?(Bors::Model::Settings).should be == true
 		end
 
 	end

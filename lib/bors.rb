@@ -12,6 +12,7 @@ class Bors
 	def initialize(options = {})
 		@examples_file = Tempfile.new('bors')
 		@options = options
+		@options[:ready_only_mode] = false
 	end
 
 	def add_example(details)
@@ -23,17 +24,30 @@ class Bors
 		get_line_from_file(@examples_file, at)
 	end
 
-	# load examples from path, should automatically detect a cache file and use that instead
-	def load(path)
+	# load examples from path, using this removes the read only mode of bors
+	def load_examples(path)
+		@options[:ready_only_mode] = false
 		true
 	end
 
+	# loads a cache file, using this puts bors into read only mode
+	def load_cache
+		@options[:ready_only_mode] = true
+	end
+
 	# outputs examples to the specified file
-	def save(path)
+	def save_examples(path)
 		raise Exceptions::MissingExamples.new unless @examples_file.length > 0
 		FileUtils.cp(@examples_file.path, path)
 		@examples_file = File.open(path, 'a')
 		true
+	end
+
+	# returns the examples as a string in VW format
+	def examples
+		with_closed_examples_file do
+			return File.open(@examples_file.path, 'r').read
+		end
 	end
 
 	# creates a training model from the loaded examples
@@ -53,16 +67,22 @@ class Bors
 	private
 
 	def get_line_from_file(path, line)
-		@examples_file.close
 		result = nil
-		File.open(path, "r") do |f|
-			while line > 0
-				line -= 1
-				result = f.gets
+		with_closed_examples_file do
+			File.open(path, "r") do |f|
+				while line > 0
+					line -= 1
+					result = f.gets
+				end
 			end
 		end
-		@examples_file = File.open(@examples_file.path, 'a')
 		result
+	end
+
+	def with_closed_examples_file(&block)
+		@examples_file.close
+		block.call
+		@examples_file = File.open(@examples_file.path, 'a')
 	end
 
 end
