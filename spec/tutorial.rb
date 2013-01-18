@@ -12,7 +12,9 @@ describe Bors do
 		result.settings.to_h
 
 		bors.save_examples("#{File.dirname(__FILE__)}/temp/tutorial.txt")
-		#bors.load_examples("#{File.dirname(__FILE__)}/temp/tutorial.txt") # not implemented yet
+		bors.load_examples("#{File.dirname(__FILE__)}/temp/tutorial.txt")
+		
+		bors.run({:final_regressor => "#{File.dirname(__FILE__)}/temp/tutorial.model"})
 
 	end
 

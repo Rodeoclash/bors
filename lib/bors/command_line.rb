@@ -6,7 +6,7 @@ class Bors
 		end
 
 		def generate
-			"vw #{data_set} #{cache} #{passes}"
+			"vw #{data_set} #{cache} #{passes} #{final_regressor}"
 		end
 
 		def data_set
@@ -19,7 +19,11 @@ class Bors
 		end
 
 		def passes
+			@options[:passes] ? "--passes #{@options[:passes]}" : ""
+		end
 
+		def final_regressor
+			@options[:final_regressor] ? "-f #{@options[:final_regressor]}" : ""
 		end
 
 	end

@@ -49,13 +49,17 @@ You can also access a sample of the run and the results:
 
 At this point, you might want to save your examples into a file so you can use them again later:
 
-	@bors.save_examples("~/examples.txt")
+	@bors.save_examples("~/tutorial_examples.txt")
 
 You can load the examples again later and they will be reparsed into the internal format:
 
-	@bors.load_examples("~/examples.txt") # NOTE - This has not been implemented yet
+	@bors.load_examples("~/examples.txt")
 
 Either saving or loading a file which switch Bors from using an internal temp file to store examples to the file you have designated. In loading or saving a file, any new examples added will be added to the file you've just loaded/saved.
+
+When you're happy with your examples and command line options, you can save your model/regressor into a file:
+
+	bors.run({:final_regressor => "~/tutorial_examples.model"})
 
 ### VW Caches
 
@@ -68,6 +72,11 @@ or loaded:
 	@bors.load_cache("~/examples.cache")
 
 Some run options on VW (like "passes") will also create a cache file before running. Once Bors is using a cache, it is impossible to add further examples. It's suggested that you save your examples out to a file before entering the cache mode.
+
+## Coming soon / Todo
+
+* Add more command line options
+* Add online modes / daemon communication wrapper 
 
 ## Contributing to Bors
  

@@ -23,12 +23,13 @@ class Bors
 	# returns an example from the file
 	def get_example(at)
 		raise Exceptions::CachedExamplesEnabled.new if examples_cached?
-		get_line_from_file(@examples_file, at)
+		get_line_from_file(@examples_file, at) # should convert to Example class instead of String
 	end
 
 	# load examples from path, using this removes the read only mode of bors
 	def load_examples(path)
 		@options[:cached_examples] = false
+		@examples_file = File.open(path, 'a')
 		true
 	end
 
@@ -37,7 +38,7 @@ class Bors
 		raise Exceptions::CachedExamplesEnabled.new if examples_cached?
 		raise Exceptions::MissingExamples.new unless @examples_file.length > 0
 		FileUtils.cp(@examples_file.path, path)
-		@examples_file = File.open(path, 'a')
+		load_examples(@examples_file.path)
 		true
 	end
 
@@ -54,6 +55,7 @@ class Bors
 		FileUtils.rm(cache_path) if File.exists?(cache_path)
 		err, out, status = Open3.capture3(CommandLine.new({:data_set => @examples_file.path, :cache => cache_path}).generate)
 		load_cache(cache_path)
+		true
 	end
 
 	def examples_cached?
@@ -70,17 +72,20 @@ class Bors
 
 	# Runs vowpal wabbit with the loaded examples
 	def run(run_options={})
-		raise Exceptions::MissingExamples.new unless @examples_file.length > 0
+		with_closed_examples_file do
+			raise Exceptions::MissingExamples.new unless File.open(@examples_file.path, 'r').readlines.count > 0
 
-		# if multiple passes are selected and we're not using cached examples, create a cache and switch to it before proceeding
-		create_cache if @options[:cached_examples] == false && run_options[:passes]
+			# if multiple passes are selected and we're not using cached examples, create a cache and switch to it before proceeding
+			create_cache if @options[:cached_examples] == false && run_options[:passes]
 
-		# pass in the reference to the cache file if we're using one
-		run_options.merge!({:cache => @examples_file.path}) if examples_cached?
+			# pass in the reference to the cache file if we're using one
+			run_options.merge!({:cache => @examples_file.path}) if examples_cached?
 
-		run_options.merge!({:data_set => @examples_file.path})
-		err, out, status = Open3.capture3(CommandLine.new(run_options).generate)
-		Result.new(out)
+			run_options.merge!({:data_set => @examples_file.path})
+			err, out, status = Open3.capture3(CommandLine.new(run_options).generate)
+
+			return Result.new(out)
+		end
 	end
 
 	private
