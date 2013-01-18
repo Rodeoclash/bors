@@ -61,6 +61,15 @@ When you're happy with your examples and command line options, you can save your
 
 	bors.run({:final_regressor => "~/tutorial_examples.model"})
 
+Or just go ahead an generate predictions from your data:
+
+	bors.run({:predictions => "~/tutorial_examples.predictions"})
+
+Finally, use an overfitted initial regressor to predict against the original results with, in training mode so no learning is done:
+
+	bors.run({:final_regressor => "~/tutorial_examples.model", :passes => 25})
+	bors.run({:initial_regressor => "~/tutorial_examples.model", :predictions => "~/tutorial_examples.predictions", :training_mode => true})
+
 ### VW Caches
 
 VW supports caching of the example text files, this reduces space, improves the speed of loading examples when running VW and allows certain functionality like multiple passes over the data. The downside is that Bors cannot read/write to the cached files. Caches can created:
@@ -75,8 +84,11 @@ Some run options on VW (like "passes") will also create a cache file before runn
 
 ## Coming soon / Todo
 
-* Add more command line options
-* Add online modes / daemon communication wrapper 
+* Wrapper around the predictions output for easy reading of/iteration over it.
+* Wrapper around the auditing output
+* "Getting" an example from the examples file should return an Example object instead of a String, but requires ability to parse VW formatted strings.
+* Add more command line options.
+* Add online modes / daemon communication wrapper.
 
 ## Contributing to Bors
  

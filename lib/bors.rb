@@ -53,7 +53,7 @@ class Bors
 	def create_cache(path = nil)
 		cache_path = path || "#{@examples_file.path}.cache"
 		FileUtils.rm(cache_path) if File.exists?(cache_path)
-		err, out, status = Open3.capture3(CommandLine.new({:data_set => @examples_file.path, :cache => cache_path}).generate)
+		err, out, status = Open3.capture3(CommandLine.new({:data_set => @examples_file.path, :cache_file => cache_path, :create_cache => true}).generate)
 		load_cache(cache_path)
 		true
 	end
@@ -79,7 +79,7 @@ class Bors
 			create_cache if @options[:cached_examples] == false && run_options[:passes]
 
 			# pass in the reference to the cache file if we're using one
-			run_options.merge!({:cache => @examples_file.path}) if examples_cached?
+			run_options.merge!({:cache_file => @examples_file.path}) if examples_cached?
 
 			run_options.merge!({:data_set => @examples_file.path})
 			err, out, status = Open3.capture3(CommandLine.new(run_options).generate)
@@ -104,7 +104,7 @@ class Bors
 	end
 
 	def with_closed_examples_file(&block)
-		@examples_file.close
+		@examples_file.close unless @examples_file.closed?
 		block.call
 		@examples_file = File.open(@examples_file.path, 'a')
 	end

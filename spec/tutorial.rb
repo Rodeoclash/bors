@@ -9,13 +9,17 @@ describe Bors do
 		bors.add_example({ :label => 1, :importance => 2, :tag => "second_house", :features => [{"price" => 0.18, "sqft" => 0.15, "age" => 0.35}, "1976"] })
 		bors.add_example({ :label => 0, :importance => 1, :prediction => 0.5, :tag => "third_house", :features => [{"price" => 0.53, "sqft" => 0.32, "age" => 0.87}, "1924"] })
 		result = bors.run
+
 		result.settings.to_h
 
 		bors.save_examples("#{File.dirname(__FILE__)}/temp/tutorial.txt")
 		bors.load_examples("#{File.dirname(__FILE__)}/temp/tutorial.txt")
 		
 		bors.run({:final_regressor => "#{File.dirname(__FILE__)}/temp/tutorial.model"})
+		bors.run({:predictions => "#{File.dirname(__FILE__)}/temp/tutorial.predictions"})
 
+		bors.run({:final_regressor => "#{File.dirname(__FILE__)}/temp/tutorial.model", :passes => 25})
+		bors.run({:initial_regressor => "#{File.dirname(__FILE__)}/temp/tutorial.model", :predictions => "~/tutorial_examples.predictions", :training_mode => true})
 	end
 
 end
