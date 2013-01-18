@@ -1,6 +1,8 @@
 require_relative 'bors/example/feature'
 require_relative 'bors/example'
 require_relative 'bors/result/settings'
+require_relative 'bors/result/samples'
+require_relative 'bors/result/statistics'
 require_relative 'bors/result'
 require_relative 'bors'
 require_relative 'tutorial'
