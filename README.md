@@ -87,14 +87,32 @@ Bors supports automatic addition of runtime options implemented through Rubys me
 
 At the moment caching is not supported from within the tool. You have the option to create caches at run time by calling the command line options as follows:
 
+## Releases
+
+### 0.0.1
+* Added pass through support for Bors options. Not all options are supported yet (see the file lib/command_line.rb for support options) but it's not trivial to add more. This means that simply passing a hash of options when calling the Bors.new object will pass those options directly through to the command line. At the moment, the follow commands are supported with more to come very soon:
+
+** examples - (path to existing examples or where to create new)
+** cache_file - (path to existing cache file or where to create a new cache)
+** create_cache - (true / false to use a cache file)
+** passes
+** initial_regressor
+** final_regressor
+** predictions
+** min_prediction
+** max_prediction
+
+* Removed inbuilt support of tempfiles and caches. It's assumed now that the program using the library will sort out how to use these files. Instead it is now a required option to pass a path through to a new or existing examples file location when creating a new Bors object. Likewise, you can pass in paths to cache files etc. See the tutorial above.
+
+* Added a new option Bors.new({:temp_examples => true}) which will automatically delete the examples file after a run has been completed. Useful if you're building them temporarily from a database and don't want them hanging around.
+
 ## Coming soon / Todo
 
 * Wrapper around the predictions output for easy reading of/iteration over it.
-* Wrapper around the auditing output
 * "Getting" an example from the examples file should return an Example object instead of a String, but requires ability to parse VW formatted strings.
 * Add more command line options.
 * Add online modes / daemon communication wrapper.
-* Automatic support of caches.
+* Automatic detection/use of cache files. Maybe.
 
 ## Contributing to Bors
  

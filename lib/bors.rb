@@ -10,6 +10,7 @@ class Bors
 	attr_reader :examples
 
 	def initialize(options)
+		raise Exceptions::ArgumentError.new('You must specify an examples file') unless options[:examples_file]
 		@options = options
 		@examples_file = File.new(options[:examples_file], 'a')
 	end

@@ -6,11 +6,10 @@ class Bors
 		end
 
 		def to_s
-			"vw #{examples} #{cache_file} #{create_cache} #{passes} #{initial_regressor} #{final_regressor} #{predictions} #{min_prediction} #{max_prediction} #{loss_function}"
+			"vw #{examples} #{cache_file} #{create_cache} #{passes} #{initial_regressor} #{final_regressor} #{predictions} #{min_prediction} #{max_prediction}"
 		end
 
 		def examples
-			raise Exceptions::ArgumentError.new('You must specify a dataset for VW to work with') unless @options[:examples]
 			@options[:examples]
 		end
 
