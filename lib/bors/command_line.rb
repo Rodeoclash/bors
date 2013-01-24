@@ -14,33 +14,47 @@ class Bors
 			@options[:data_set]
 		end
 
-		def cache_file
-			@options[:cache_file] ? "--cache_file #{@options[:cache_file]}" : ""
-		end
-
 		def create_cache
 			raise Exceptions::ArgumentError.new('Must specify the cache file paramater as well when creating the cache') if @options[:create_cache] == true && @options[:cache_file].nil?
 			@options[:create_cache] == true ? "-c #{cache_file}" : ""
 		end
 
+		def training_mode
+			@options[:training_mode] == true ? true : false
+		end
+
+		def cache_file
+			option_exists(:cache_file)
+		end
+
 		def passes
-			@options[:passes] ? "--passes #{@options[:passes]}" : ""
+			option_exists(:passes)
 		end
 
 		def initial_regressor
-			@options[:initial_regressor] ? "-i #{@options[:initial_regressor]}" : ""
+			option_exists(:initial_regressor)
 		end
 
 		def final_regressor
-			@options[:final_regressor] ? "-f #{@options[:final_regressor]}" : ""
+			option_exists(:final_regressor)
 		end
 
 		def predictions
-			@options[:predictions] ? "-p #{@options[:predictions]}" : ""
+			option_exists(:predictions)
 		end
 
-		def training_mode
-			@options[:training_mode] == true ? true : false
+		def min_prediction
+			option_exists(:min_prediction)
+		end
+
+		def max_prediction
+			option_exists(:max_prediction)
+		end
+
+		private
+
+		def option_exists(sym)
+			@options[sym] ? "--#{sym.to_s} #{@options[:sym]}" : ""
 		end
 
 	end

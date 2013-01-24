@@ -11,7 +11,6 @@ class Bors
 				found = false
 
 				data.each_line do |line|
-
 					if line.match(/^\n/)
 						break
 					end
