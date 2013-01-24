@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "bors"
-  s.version = "0.0.0"
+  s.version = "0.0.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Sam Richardson"]
-  s.date = "2013-01-13"
+  s.date = "2013-01-24"
   s.description = "Wrapper for the Vowpal Wabbit library"
   s.email = "sam@richardson.co.nz"
   s.extra_rdoc_files = [
@@ -26,18 +26,27 @@ Gem::Specification.new do |s|
     "VERSION",
     "bors.gemspec",
     "lib/bors.rb",
+    "lib/bors/command_line.rb",
     "lib/bors/example.rb",
     "lib/bors/example/feature.rb",
     "lib/bors/exceptions.rb",
-    "lib/bors/maths.rb",
-    "lib/bors/model.rb",
-    "lib/bors/prediction.rb",
-    "lib/bors/prediction/result.rb",
+    "lib/bors/math.rb",
+    "lib/bors/result.rb",
+    "lib/bors/result/samples.rb",
+    "lib/bors/result/settings.rb",
+    "lib/bors/result/statistics.rb",
     "spec/bors.rb",
     "spec/bors/example.rb",
     "spec/bors/example/feature.rb",
+    "spec/bors/result.rb",
+    "spec/bors/result/samples.rb",
+    "spec/bors/result/settings.rb",
+    "spec/bors/result/statistics.rb",
+    "spec/fixtures/examples.txt",
+    "spec/fixtures/result.txt",
     "spec/runner.rb",
-    "spec/spec_helper.rb"
+    "spec/spec_helper.rb",
+    "spec/tutorial.rb"
   ]
   s.homepage = "http://github.com/rodeoclash/bors"
   s.licenses = ["MIT"]
@@ -50,38 +59,23 @@ Gem::Specification.new do |s|
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<oj>, [">= 0"])
-      s.add_development_dependency(%q<shoulda>, [">= 0"])
+      s.add_runtime_dependency(%q<hashie-pre>, ["~> 2.0.0.beta"])
       s.add_development_dependency(%q<rdoc>, ["~> 3.12"])
       s.add_development_dependency(%q<jeweler>, ["~> 1.8.4"])
       s.add_development_dependency(%q<bundler>, [">= 0"])
-      s.add_development_dependency(%q<shoulda>, [">= 0"])
-      s.add_development_dependency(%q<rdoc>, ["~> 3.12"])
-      s.add_development_dependency(%q<bundler>, [">= 0"])
-      s.add_development_dependency(%q<jeweler>, ["~> 1.8.4"])
-      s.add_development_dependency(%q<simplecov>, [">= 0"])
     else
       s.add_dependency(%q<oj>, [">= 0"])
-      s.add_dependency(%q<shoulda>, [">= 0"])
+      s.add_dependency(%q<hashie-pre>, ["~> 2.0.0.beta"])
       s.add_dependency(%q<rdoc>, ["~> 3.12"])
       s.add_dependency(%q<jeweler>, ["~> 1.8.4"])
       s.add_dependency(%q<bundler>, [">= 0"])
-      s.add_dependency(%q<shoulda>, [">= 0"])
-      s.add_dependency(%q<rdoc>, ["~> 3.12"])
-      s.add_dependency(%q<bundler>, [">= 0"])
-      s.add_dependency(%q<jeweler>, ["~> 1.8.4"])
-      s.add_dependency(%q<simplecov>, [">= 0"])
     end
   else
     s.add_dependency(%q<oj>, [">= 0"])
-    s.add_dependency(%q<shoulda>, [">= 0"])
+    s.add_dependency(%q<hashie-pre>, ["~> 2.0.0.beta"])
     s.add_dependency(%q<rdoc>, ["~> 3.12"])
     s.add_dependency(%q<jeweler>, ["~> 1.8.4"])
     s.add_dependency(%q<bundler>, [">= 0"])
-    s.add_dependency(%q<shoulda>, [">= 0"])
-    s.add_dependency(%q<rdoc>, ["~> 3.12"])
-    s.add_dependency(%q<bundler>, [">= 0"])
-    s.add_dependency(%q<jeweler>, ["~> 1.8.4"])
-    s.add_dependency(%q<simplecov>, [">= 0"])
   end
 end
 
