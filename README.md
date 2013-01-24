@@ -92,15 +92,15 @@ At the moment caching is not supported from within the tool. You have the option
 ### 0.0.1
 * Added pass through support for Bors options. Not all options are supported yet (see the file lib/command_line.rb for support options) but it's not trivial to add more. This means that simply passing a hash of options when calling the Bors.new object will pass those options directly through to the command line. At the moment, the follow commands are supported with more to come very soon:
 
-** examples - (path to existing examples or where to create new)
-** cache_file - (path to existing cache file or where to create a new cache)
-** create_cache - (true / false to use a cache file)
-** passes
-** initial_regressor
-** final_regressor
-** predictions
-** min_prediction
-** max_prediction
+	* examples - (path to existing examples or where to create new)
+	* cache_file - (path to existing cache file or where to create a new cache)
+	* create_cache - (true / false to use a cache file)
+	* passes
+	* initial_regressor
+	* final_regressor
+	* predictions
+	* min_prediction
+	* max_prediction
 
 * Removed inbuilt support of tempfiles and caches. It's assumed now that the program using the library will sort out how to use these files. Instead it is now a required option to pass a path through to a new or existing examples file location when creating a new Bors object. Likewise, you can pass in paths to cache files etc. See the tutorial above.
 
