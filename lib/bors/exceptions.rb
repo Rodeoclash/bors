@@ -7,9 +7,7 @@ class Bors
 
 		class NotRealNumber < BorsError; end
 
-		class MissingExamples < BorsError; end
-
-		class CachedExamplesEnabled < BorsError; end
+		class VWCommandLineError < BorsError; end
 
 	end
 end

@@ -24,7 +24,7 @@ This introduction mirrors the step by step introduction on the VW tutorial page.
 
 	require 'bors'
 
-	bors = Bors.new
+	bors = Bors.new({:examples_file => "path/to/examples.txt"})
 
 	bors.add_example({ :label => 0, :features => [{"price" => 0.23, "sqft" => 0.25, "age" => 0.05}, "2006"] })
 	bors.add_example({ :label => 1, :importance => 2, :tag => "second_house", :features => [{"price" => 0.18, "sqft" => 0.15, "age" => 0.35}, "1976"] })
@@ -32,7 +32,7 @@ This introduction mirrors the step by step introduction on the VW tutorial page.
 
 Then process it for learning
 
-	result = bors.run
+	result = bors.run!
 
 Bors will return a result object which can be inspected for more information:
 
@@ -47,40 +47,45 @@ You can also access a sample of the run and the results:
 	puts result.sample.to_h
 	puts result.results.to_h	
 
-At this point, you might want to save your examples into a file so you can use them again later:
+Examples are also automatically saved as you work.
 
-	@bors.save_examples("~/tutorial_examples.txt")
+If you want to work with an existing examples file, simply reinitialize the bors model pointing towards your text file.
 
-You can load the examples again later and they will be reparsed into the internal format:
+	 Bors.new({:examples_file => "path/to/old_examples.txt"})
 
-	@bors.load_examples("~/examples.txt")
-
-Either saving or loading a file which switch Bors from using an internal temp file to store examples to the file you have designated. In loading or saving a file, any new examples added will be added to the file you've just loaded/saved.
+New examples added to the object will be added to the end of the file.
 
 When you're happy with your examples and command line options, you can save your model/regressor into a file:
 
-	bors.run({:final_regressor => "~/tutorial_examples.model"})
+	bors.run!({:final_regressor => "~/tutorial_examples.model"})
 
 Or just go ahead an generate predictions from your data:
 
-	bors.run({:predictions => "~/tutorial_examples.predictions"})
+	bors.run!({:predictions => "~/tutorial_examples.predictions"})
 
 Finally, use an overfitted initial regressor to predict against the original results with, in training mode so no learning is done:
 
-	bors.run({:final_regressor => "~/tutorial_examples.model", :passes => 25})
-	bors.run({:initial_regressor => "~/tutorial_examples.model", :predictions => "~/tutorial_examples.predictions", :training_mode => true})
+	bors.run!({:final_regressor => "~/tutorial_examples.model", :passes => 25})
+	bors.run!({:initial_regressor => "~/tutorial_examples.model", :predictions => "~/tutorial_examples.predictions", :training_mode => true})
+
+### Run Options
+
+Bors supports automatic addition of runtime options implemented through Rubys method missing attribute. In other words, just set the command line options you would normally use on the object as a hash and they will be passed through.
+
+	bors.run!({
+		:training_mode => true,
+		:create_cache => true,
+		:cache_file => cache_path,
+		:passes => 3,
+		:initial_regressor => model_path,
+		:predictions => predictions_path,
+		:min_prediction => -1,
+		:max_prediction => 1
+	})
 
 ### VW Caches
 
-VW supports caching of the example text files, this reduces space, improves the speed of loading examples when running VW and allows certain functionality like multiple passes over the data. The downside is that Bors cannot read/write to the cached files. Caches can created:
-
-	@bors.create_cache("~/examples.cache")
-
-or loaded:
-
-	@bors.load_cache("~/examples.cache")
-
-Some run options on VW (like "passes") will also create a cache file before running. Once Bors is using a cache, it is impossible to add further examples. It's suggested that you save your examples out to a file before entering the cache mode.
+At the moment caching is not supported from within the tool. You have the option to create caches at run time by calling the command line options as follows:
 
 ## Coming soon / Todo
 
@@ -89,6 +94,7 @@ Some run options on VW (like "passes") will also create a cache file before runn
 * "Getting" an example from the examples file should return an Example object instead of a String, but requires ability to parse VW formatted strings.
 * Add more command line options.
 * Add online modes / daemon communication wrapper.
+* Automatic support of caches.
 
 ## Contributing to Bors
  
