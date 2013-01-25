@@ -89,6 +89,9 @@ At the moment caching is not supported from within the tool. You have the option
 
 ## Releases
 
+### 0.0.2
+* Small bump to remove the dependency on the Hashie pre-release gem.
+
 ### 0.0.1
 * Added pass through support for Bors options. Not all options are supported yet (see the file lib/command_line.rb for support options) but it's not trivial to add more. This means that simply passing a hash of options when calling the Bors.new object will pass those options directly through to the command line. At the moment, the follow commands are supported with more to come very soon:
 
