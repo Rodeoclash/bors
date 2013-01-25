@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Sam Richardson"]
-  s.date = "2013-01-24"
+  s.date = "2013-01-25"
   s.description = "Wrapper for the Vowpal Wabbit library"
   s.email = "sam@richardson.co.nz"
   s.extra_rdoc_files = [
@@ -59,20 +59,20 @@ Gem::Specification.new do |s|
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<oj>, [">= 0"])
-      s.add_runtime_dependency(%q<hashie-pre>, ["~> 2.0.0.beta"])
+      s.add_runtime_dependency(%q<hashie>, [">= 0"])
       s.add_development_dependency(%q<rdoc>, ["~> 3.12"])
       s.add_development_dependency(%q<jeweler>, ["~> 1.8.4"])
       s.add_development_dependency(%q<bundler>, [">= 0"])
     else
       s.add_dependency(%q<oj>, [">= 0"])
-      s.add_dependency(%q<hashie-pre>, ["~> 2.0.0.beta"])
+      s.add_dependency(%q<hashie>, [">= 0"])
       s.add_dependency(%q<rdoc>, ["~> 3.12"])
       s.add_dependency(%q<jeweler>, ["~> 1.8.4"])
       s.add_dependency(%q<bundler>, [">= 0"])
     end
   else
     s.add_dependency(%q<oj>, [">= 0"])
-    s.add_dependency(%q<hashie-pre>, ["~> 2.0.0.beta"])
+    s.add_dependency(%q<hashie>, [">= 0"])
     s.add_dependency(%q<rdoc>, ["~> 3.12"])
     s.add_dependency(%q<jeweler>, ["~> 1.8.4"])
     s.add_dependency(%q<bundler>, [">= 0"])
