@@ -1,7 +1,7 @@
 source "http://rubygems.org"
 
 gem 'oj'
-gem "hashie-pre", "~> 2.0.0.beta"
+gem "hashie"
 
 group :development do
   gem "rdoc", "~> 3.12"

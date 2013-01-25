@@ -3,8 +3,7 @@ require 'oj'
 
 class Bors
 	class Result
-		class Statistics < Hash
-			include Hashie::Extensions::MethodAccess
+		class Statistics < Hashie::Mash
 
 			SPLIT_SETTINGS_LINE = /\s=\s/
 
