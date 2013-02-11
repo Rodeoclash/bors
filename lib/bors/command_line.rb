@@ -6,7 +6,7 @@ class Bors
 		end
 
 		def to_s
-			"vw #{examples} #{cache_file} #{create_cache} #{passes} #{initial_regressor} #{final_regressor} #{predictions} #{min_prediction} #{max_prediction}"
+			"vw --data #{examples} #{training_mode} #{cache_file} #{create_cache} #{passes} #{initial_regressor} #{bit_precision} #{quadratic} #{ngram} #{final_regressor} #{predictions} #{min_prediction} #{max_prediction} #{loss_function}".squeeze(' ')
 		end
 
 		def examples
@@ -14,12 +14,11 @@ class Bors
 		end
 
 		def create_cache
-			raise Exceptions::ArgumentError.new('Must specify the cache file paramater as well when creating the cache') if @options[:create_cache] == true && @options[:cache_file].nil?
-			@options[:create_cache] == true ? "-c" : ""
+			@options[:create_cache] == true ? "-c" : nil
 		end
 
 		def training_mode
-			@options[:training_mode] == true ? true : false
+			@options[:training_mode] == true ? "-t" : nil
 		end
 
 		def run!

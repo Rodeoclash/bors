@@ -4,6 +4,8 @@ require_relative "result/statistics"
 
 class Bors
 	class Result
+
+		attr_reader :data
 		
 		def initialize(data)
 			@data = data
