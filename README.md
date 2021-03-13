@@ -4,7 +4,7 @@
 
 Bors is a wrapper for the Vowpal Wabbit library by John Langford. It consists of a wrapper around the command line making it easy to interface to it via Ruby.
 
-You can read more about Vowpal Wabbit here: http://hunch.net/~vw/
+[Read more about Vowpal Wabbit](https://vowpalwabbit.org/)
 
 ## Installing
 
